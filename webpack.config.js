@@ -1,5 +1,5 @@
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const path = require('path');
 
@@ -60,8 +60,11 @@ module.exports = {
                     presets: [
                         [
                             '@babel/preset-env', {
-                                targets: {node:'current'}, // 노드일 경우만
-                                modules: 'false',
+                                targets: {
+                                    node:'current', // 노드일 경우만
+                                    //browsers: ["last 3 versions", "ie >= 11"] // 각 브라우저로도 가능
+                                }, 
+                                modules: false, //<== 이거 에러나는데 왜 아는거지??
                                 useBuiltIns: 'usage'
                             }
                         ],
@@ -70,14 +73,34 @@ module.exports = {
                     ]
                 },
                 exclude: ['/node_modules'],
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    MiniCssExtractPlugin.loader, {
+                    loader:'css-loader',
+                    options: {
+                        sourceMap: true,
+                    }
+                },
+                {
+                    loader:'sass-loader',
+                    options: {
+                        sourceMap: true,
+                    }
+                }],
+                exclude: ['/node_modules'],
             }
         ]
     },
-    plugins:[],
+    plugins:[
+        new MiniCssExtractPlugin({filename:'[name].css'})
+    ],
     optimization: {},
     resolve: {
         modules: ['node_modules'],
         extensions: ['.js', '.json', '.jsx', '.css'],
     },
+    
 };
 
