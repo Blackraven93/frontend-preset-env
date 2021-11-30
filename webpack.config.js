@@ -6,7 +6,6 @@ const path = require('path');
 
 module.exports = {
     // devServer
-    watch:true,
     mode:'development',
     // devtool: 'eval-cheap-source-map', 
     devServer: {
@@ -37,8 +36,8 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                loader: 'babel-loader',
+                test: /\.(js|jsx)$/,
+                loader:'babel-loader',
                 options: {
                     presets: [
                         [
@@ -48,13 +47,13 @@ module.exports = {
                                     //browsers: ["last 3 versions", "ie >= 11"] // 각 브라우저로도 가능
                                 }, 
                                 modules: false, //<== 이거 에러나는데 왜 아는거지?? 
-                                useBuiltIns: 'usage'
+                                // useBuiltIns: 'usage' <== 이거 경고 나옴...
                             }
                         ],
                         // '@babel/preset-react', // 리액트를 사용한다면
                         // '@babel/preset-typescript' // 타입스크립트를 사용한다면
                     ],
-                    plugins: ['@babel/plugin-syntax-dynamic-import']
+                    plugins: ['@babel/plugin-syntax-dynamic-import',"@babel/plugin-transform-runtime"]
                 },
                 include: [path.resolve(__dirname, './src')],
                 exclude: ['/node_modules'],

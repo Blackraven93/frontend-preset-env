@@ -1,0 +1,14 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "useBuiltIns": "usage",
+                "corejs": 3
+                // 실제 사용한 폴리필만 사용
+                // "targets": "default" "node" "safari..."
+            }
+        
+        ]
+    ]
+}
