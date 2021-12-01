@@ -1,5 +1,11 @@
-import './test/css/test.scss'
 
-console.log('hi')
+import './test/css/test.scss';
+
+/* eslint-disable no-console */
+console.log('hi');
 console.log('bye');
-console.log('right')
+console.log('right');
+
+const test = 0;
+console.log(test);
+/* eslint-disable no-console */
