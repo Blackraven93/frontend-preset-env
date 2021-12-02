@@ -1,0 +1,19 @@
+GET https://api.openweathermap.org/data/2.5/onecall?lat=37.4723721&lon=126.8960041&exclude=hourly&appid=9413c9bc4edcdb119054435ec08eb5fe&lang=kr HTTP/1.1
+
+###
+
+GET https://example.com/topics/1 HTTP/1.1
+
+###
+
+POST https://example.com/comments HTTP/1.1
+content-type: application/json
+
+{
+    "name": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+// kr
+
+// lat, long
+// 37.4723721 126.8960041

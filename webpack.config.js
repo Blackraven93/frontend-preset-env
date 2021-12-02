@@ -1,8 +1,10 @@
+const path = require('path');
+
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const {CleanWebpackPlugin} = require("clean-webpack-plugin") 
+const Dotenv = require("dotenv-webpack");
 
-const path = require('path');
 
 module.exports = {
     // devServer
@@ -20,11 +22,12 @@ module.exports = {
         app: ['./src/test/app.js', './src/test/bpp.js']
     },
     output:{
-        filename:'[name].[chunkhash].bundle.js',
+        filename:'[name].bundle.js', // '[name].[chunkhash].bundle.js'
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/'
     },
     plugins:[
+        new Dotenv(),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({filename:'[name].css'}),
         new HtmlWebpackPlugin({template:'./src/index.html'})
