@@ -1,4 +1,4 @@
-GET https://api.openweathermap.org/data/2.5/onecall?lat=37.4723721&lon=126.8960041&exclude=hourly&appid=9413c9bc4edcdb119054435ec08eb5fe&lang=kr HTTP/1.1
+GET https://api.openweathermap.org/data/2.5 HTTP/1.1
 
 ###
 
