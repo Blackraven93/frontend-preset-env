@@ -22,7 +22,7 @@ module.exports = {
         app: ['./src/test/app.js', './src/test/bpp.js']
     },
     output:{
-        filename:'[name].bundle.js', // '[name].[chunkhash].bundle.js'
+        filename:'[name].[chunkhash].bundle.js',
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/'
     },
@@ -81,4 +81,7 @@ module.exports = {
             }
         ]
     },
+    optimization: {
+        runtimeChunk: 'single' // chunk 변경시 매번 새로고침하기 불편해서 적용
+    }
 }

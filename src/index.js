@@ -1,34 +1,52 @@
 import "./test/css/test.scss";
 
+const content = document.querySelector(".content");
 
-let myPositon = {
-    latitude: 0,
-    longitude: 0
-}
+// Kelvin -> Celsius 온도 변환기
+const convertToCelsius = (kelvin) => {
+  return (kelvin - 273.15).toFixed(2);
+};
 
-/* eslint-disable no-console */
-/* eslint-disable no-console */
+// 요청 받은 json을 element에 넣는 함수
+const handleCreateElement = (tag, text, temperature) => {
+  const container = document.createElement("div");
+  const createdTag = document.createElement(tag);
+  console.log(text);
+  createdTag.innerText = `${temperature}°C`;
 
-const geoInfo = navigator.geolocation.watchPosition(position => {
-    let latitude = position.coords.latitude
-    let longitude = position.coords.longitude;
+  container.appendChild(createdTag);
 
-    myPositon.latitude = latitude
-    myPositon.longitude = longitude
+  return container;
+};
 
-    navigator.geolocation.clearWatch(geoInfo)
-})
+// request 요청
+const handleAjaxRequest = (latitude, longitude) => {
+  const URL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.WEATHER_API_KEY}`;
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", URL, true);
+  xhr.responseType = "json";
+  xhr.send();
 
+  xhr.onload = () => {
+    // 왜 이건 가능하지..?
+    const responseOk = xhr.response;
 
+    content.appendChild(
+      handleCreateElement(
+        "p",
+        responseOk,
+        convertToCelsius(responseOk.main.temp)
+      )
+    );
+  };
+};
 
-const URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${myPositon.latitude}&lon=${myPositon.longitude}&exclude=hourly&appid=${process.env.WEATHER_API_KEY}&lang=kr`
+// 위치값을 가져와 출력
+const getGeoInfo = navigator.geolocation.watchPosition((position) => {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
 
-const xhr = new XMLHttpRequest();
-xhr.open('GET', URL, true);
-xhr.send()
+  handleAjaxRequest(latitude, longitude);
 
-xhr.onreadystatechange = (e) => {
-    console.log(`ready to state : ${xhr.readyState}`)
-    console.log(xhr.response)
-}
-
+  navigator.geolocation.clearWatch(getGeoInfo);
+});
