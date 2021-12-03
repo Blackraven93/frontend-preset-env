@@ -3,8 +3,12 @@ const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const {CleanWebpackPlugin} = require("clean-webpack-plugin") 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const Dotenv = require("dotenv-webpack");
 
+
+const JSPATH = './src/js'
+const TEMPLATEPATH = './src/views'
 
 module.exports = {
     // devServer
@@ -18,8 +22,8 @@ module.exports = {
 
     // webpack config
     entry:{
-        raven: './src/index.js',
-        app: ['./src/test/app.js', './src/test/bpp.js']
+        main: `${JSPATH}/index.js`,
+        app: [`${JSPATH}/Components/app.js`, `${JSPATH}/Components/bpp.js`]
     },
     output:{
         filename:'[name].[chunkhash].bundle.js',
@@ -30,7 +34,8 @@ module.exports = {
         new Dotenv(),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({filename:'[name].css'}),
-        new HtmlWebpackPlugin({template:'./src/index.html'})
+        new HtmlWebpackPlugin({template:`${TEMPLATEPATH}/index.html`}),
+        new BundleAnalyzerPlugin()
     ],
     resolve: {
         modules: ['node_modules'],
@@ -58,7 +63,7 @@ module.exports = {
                     ],
                     plugins: ['@babel/plugin-syntax-dynamic-import',"@babel/plugin-transform-runtime"]
                 },
-                include: [path.resolve(__dirname, './src')],
+                include: [path.resolve(__dirname, JSPATH)],
                 exclude: ['/node_modules'],
             },
             {
